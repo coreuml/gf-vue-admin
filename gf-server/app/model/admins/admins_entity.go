@@ -6,23 +6,22 @@ package admins
 
 import (
 	"database/sql"
-
 	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/os/gtime"
 )
 
 // Entity is the golang structure for table admins.
 type Entity struct {
-	Id          uint        `orm:"id,primary"   json:"id"`           // 自增ID
-	CreateAt    *gtime.Time `orm:"create_at"    json:"create_at"`    // 创建时间
-	UpdateAt    *gtime.Time `orm:"update_at"    json:"update_at"`    // 更新时间
-	DeleteAt    *gtime.Time `orm:"delete_at"    json:"delete_at"`    // 删除时间
-	UUID        string      `orm:"uuid"         json:"uuid"`         // 用户唯一标识UUID
-	Nickname    string      `orm:"nickname"     json:"nickname"`     // 用户昵称
-	HeaderImg   string      `orm:"header_img"   json:"header_img"`   // 用户头像
-	AuthorityId string      `orm:"authority_id" json:"authority_id"` // 用户角色ID
-	Username    string      `orm:"username"     json:"username"`     // 用户名
-	Password    string      `orm:"password"     json:"password"`     // 用户登录密码
+    Id          uint        `orm:"id,primary"   json:"id"`           // 自增ID            
+    CreateAt    *gtime.Time `orm:"create_at"    json:"create_at"`    // 创建时间          
+    UpdateAt    *gtime.Time `orm:"update_at"    json:"update_at"`    // 更新时间          
+    DeleteAt    *gtime.Time `orm:"delete_at"    json:"delete_at"`    // 删除时间          
+    UUID        string      `orm:"uuid"         json:"uuid"`         // 用户唯一标识UUID
+    Nickname    string      `orm:"nickname"     json:"nickname"`     // 用户昵称          
+    HeaderImg   string      `orm:"header_img"   json:"header_img"`   // 用户头像          
+    AuthorityId string      `orm:"authority_id" json:"authority_id"` // 用户角色ID        
+    Username    string      `orm:"username"     json:"username"`     // 用户名            
+    Password    string      `orm:"password"     json:"password"`     // 用户登录密码      
 }
 
 // OmitEmpty sets OPTION_OMITEMPTY option for the model, which automatically filers

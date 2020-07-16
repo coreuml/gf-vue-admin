@@ -4,6 +4,7 @@ import (
 	"errors"
 	"gf-server/app/api/request"
 	"gf-server/app/model/apis"
+	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/util/gconv"
 
 	"github.com/gogf/gf/frame/g"
@@ -29,8 +30,8 @@ func CreateApi(api *request.CreateApi) error {
 
 // UpdateApi 更新api信息
 func UpdateApi(api *request.UpdateApi) error {
-	oldApi, err := apis.FindOne(g.Map{"id": api.ID})
-	if oldApi.Path != api.Path || oldApi.Method != api.Method {
+	oldA, err := apis.FindOne(g.Map{"id": api.ID})
+	if oldA.Path != api.Path || oldA.Method != api.Method {
 		if !apis.RecordNotFound(g.Map{"path": api.Path, "method": api.Method}) {
 			return errors.New("存在相同api路径")
 		}
@@ -38,7 +39,9 @@ func UpdateApi(api *request.UpdateApi) error {
 	if err != nil {
 		return err
 	}
-	// TODO 		if err = UpdateCasbinApi(oldA.Path, api.Path, oldA.Method, api.Method); err != nil{ return err }
+	if err = UpdateCasbinApi(oldA.Path, api.Path, oldA.Method, api.Method); err != nil{
+		return err
+	}
 	_, err = apis.Save(api)
 	return err
 }
@@ -46,7 +49,7 @@ func UpdateApi(api *request.UpdateApi) error {
 // DeleteApi 删除api
 func DeleteApi(api *request.DeleteApi) error {
 	_, err := apis.Delete(g.Map{"id": api.ID})
-	// 	TODO ClearCasbin(1, api.Path, api.Method)
+	ClearCasbin(1, api.Path, api.Method)
 	return err
 }
 
@@ -64,6 +67,7 @@ func GetAllApis() (apisReturn []*apis.Entity, err error) {
 // 未测试,不确定逻辑是否走得通
 func GetApiInfoList(api *request.GetApiList) (list interface{}, total int, err error) {
 	db := g.DB("default")
+	gdb.New()
 	limit := api.PageSize
 	offset := api.PageSize * (api.Page - 1)
 	condition := g.Map{}

@@ -9,6 +9,8 @@ type CreateApi struct {
 
 type DeleteApi struct {
 	ID int `p:"id" v:"method@required|length:1,1000#请输入ID|ID长度为:min到:max位"`
+	Path        string `p:"path" v:"path@required|length:1,100#请输入api路径|api路径长度为:min到:max位"`
+	Method      string `p:"method" v:"method@required|length:1,100#请输入api请求方法|api请求方法长度为:min到:max位"`
 }
 
 type UpdateApi struct {

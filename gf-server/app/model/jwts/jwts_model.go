@@ -24,11 +24,11 @@ var (
 	Model = &arModel{g.DB("default").Table(Table).Safe()}
 	// Columns defines and stores column names for table jwts.
 	Columns = struct {
-		Id        string //   
-        CreateAt  string //   
-        UpdateAt  string //   
-        DeleteAt  string //   
-        Jwt       string //
+		Id        string // 自增ID    
+        CreateAt  string // 更新时间  
+        UpdateAt  string // 更新时间  
+        DeleteAt  string // 删除时间  
+        Jwt       string // jwt
 	}{
 		Id:       "id",         
         CreateAt: "create_at",  
@@ -120,30 +120,18 @@ func (m *arModel) Slave() *arModel {
 }
 
 // LeftJoin does "LEFT JOIN ... ON ..." statement on the model.
-// The parameter <table> can be joined table and its joined condition,
-// and also with its alias name, like:
-// Table("user").LeftJoin("user_detail", "user_detail.uid=user.uid")
-// Table("user", "u").LeftJoin("user_detail", "ud", "ud.uid=u.uid")
-func (m *arModel) LeftJoin(table ...string) *arModel {
-	return &arModel{m.M.LeftJoin(table ...)}
+func (m *arModel) LeftJoin(joinTable string, on string) *arModel {
+	return &arModel{m.M.LeftJoin(joinTable, on)}
 }
 
 // RightJoin does "RIGHT JOIN ... ON ..." statement on the model.
-// The parameter <table> can be joined table and its joined condition,
-// and also with its alias name, like:
-// Table("user").RightJoin("user_detail", "user_detail.uid=user.uid")
-// Table("user", "u").RightJoin("user_detail", "ud", "ud.uid=u.uid")
-func (m *arModel) RightJoin(table ...string) *arModel {
-	return &arModel{m.M.RightJoin(table ...)}
+func (m *arModel) RightJoin(joinTable string, on string) *arModel {
+	return &arModel{m.M.RightJoin(joinTable, on)}
 }
 
 // InnerJoin does "INNER JOIN ... ON ..." statement on the model.
-// The parameter <table> can be joined table and its joined condition,
-// and also with its alias name, like:
-// Table("user").InnerJoin("user_detail", "user_detail.uid=user.uid")
-// Table("user", "u").InnerJoin("user_detail", "ud", "ud.uid=u.uid")
-func (m *arModel) InnerJoin(table ...string) *arModel {
-	return &arModel{m.M.InnerJoin(table ...)}
+func (m *arModel) InnerJoin(joinTable string, on string) *arModel {
+	return &arModel{m.M.InnerJoin(joinTable, on)}
 }
 
 // Fields sets the operation fields of the model, multiple fields joined using char ','.
@@ -203,8 +191,8 @@ func (m *arModel) Group(groupBy string) *arModel {
 }
 
 // Order sets the "ORDER BY" statement for the model.
-func (m *arModel) Order(orderBy ...string) *arModel {
-	return &arModel{m.M.Order(orderBy...)}
+func (m *arModel) Order(orderBy string) *arModel {
+	return &arModel{m.M.Order(orderBy)}
 }
 
 // Limit sets the "LIMIT" statement for the model.
@@ -343,9 +331,4 @@ func (m *arModel) LockUpdate() *arModel {
 // LockShared sets the lock in share mode for current operation.
 func (m *arModel) LockShared() *arModel {
 	return &arModel{m.M.LockShared()}
-}
-
-// Unscoped enables/disables the soft deleting feature.
-func (m *arModel) Unscoped() *arModel {
-	return &arModel{m.M.Unscoped()}
 }
