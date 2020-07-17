@@ -9,7 +9,7 @@
         <el-input v-model="config.system.env"></el-input>
       </el-form-item>
       <el-form-item label="端口值">
-        <el-input v-model="config.system.addr"></el-input>
+        <el-input v-model.number="config.system.addr"></el-input>
       </el-form-item>
       <el-form-item label="数据库类型">
         <el-select v-model="config.system.dbType">
@@ -46,7 +46,7 @@
           <el-input v-model.number="config.mysql.maxOpenConns"></el-input>
         </el-form-item>
         <el-form-item label="logMode">
-          <el-checkbox v-model="config.log.logMode"></el-checkbox>
+          <el-checkbox v-model="config.mysql.logMode"></el-checkbox>
         </el-form-item>
       </template>
       <template v-show="config.system.dbType == 'sqlite'">
