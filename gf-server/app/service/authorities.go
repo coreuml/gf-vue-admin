@@ -91,7 +91,6 @@ func DeleteAuthority(auth *authorities.Authorities) (err error) {
 // GetInfoList 分页获取数据
 func GetAuthorityInfoList(info request.PageInfo) (list interface{}, total int, err error) {
 	var (
-		result        gdb.Result
 		authorityList []authorities.Authorities
 		dataAuthority []*authorities.Authorities
 		dataEntity    []*authorities.Entity
@@ -99,13 +98,10 @@ func GetAuthorityInfoList(info request.PageInfo) (list interface{}, total int, e
 	db := global.GFVA_DB.Table("authorities").Safe()
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	result, err = db.Where(g.Map{"parent_id": "0"}).Limit(limit).Offset(offset).FindAll()
-	if err != nil {
+	if err = db.Where(g.Map{"parent_id": "0"}).Limit(limit).Offset(offset).Scan(&authorityList);err != nil {
 		return authorityList, total, errors.New("查询失败! ")
 	}
-	if err = gconv.Structs(result, authorityList); err != nil {
-		return authorityList, total, errors.New("查询失败! ")
-	}
+	// TODO 自关联
 	if dataEntity, err = authorities.FindAll(); err != nil{
 		return authorityList, total, errors.New("查询失败! ")
 	}
@@ -121,37 +117,41 @@ func GetAuthorityInfoList(info request.PageInfo) (list interface{}, total int, e
 
 // GetAuthorityInfo Get all character information
 // GetAuthorityInfo 获取所有角色信息
-func GetAuthorityInfo(auth authorities.Authorities) (err error, sa authorities.Authorities) {
-	err = global.GVA_DB.Preload("DataAuthorityId").Where("authority_id = ?", auth.AuthorityId).First(&sa).Error
-	return err, sa
+func GetAuthorityInfo(auth *authorities.Authorities) (err error, sa authorities.Authorities) {
+	//err = global.GVA_DB.Preload("DataAuthorityId").Where("authority_id = ?", auth.AuthorityId).First(&sa).Error
+	//return err, sa
+	return
 }
 
 // SetDataAuthority Set role resource permissions
 // SetDataAuthority 设置角色资源权限
-func SetDataAuthority(auth authorities.Authorities) error {
-	var s model.SysAuthority
-	global.GVA_DB.Preload("DataAuthorityId").First(&s, "authority_id = ?", auth.AuthorityId)
-	err := global.GVA_DB.Model(&s).Association("DataAuthorityId").Replace(&auth.DataAuthorityId).Error
-	return err
+func SetDataAuthority(auth *authorities.Authorities) (err error) {
+	//var s model.SysAuthority
+	//global.GVA_DB.Preload("DataAuthorityId").First(&s, "authority_id = ?", auth.AuthorityId)
+	//err := global.GVA_DB.Model(&s).Association("DataAuthorityId").Replace(&auth.DataAuthorityId).Error
+	//return
+	return
 }
 
 // SetMenuAuthority Menu and character binding
 // SetMenuAuthority 菜单与角色绑定
-func SetMenuAuthority(auth *model.SysAuthority) error {
-	var s model.SysAuthority
-	global.GVA_DB.Preload("SysBaseMenus").First(&s, "authority_id = ?", auth.AuthorityId)
-	err := global.GVA_DB.Model(&s).Association("SysBaseMenus").Replace(&auth.SysBaseMenus).Error
-	return err
+func SetMenuAuthority(auth *authorities.Authorities) (err error) {
+	//var s model.SysAuthority
+	//global.GVA_DB.Preload("SysBaseMenus").First(&s, "authority_id = ?", auth.AuthorityId)
+	//err := global.GVA_DB.Model(&s).Association("SysBaseMenus").Replace(&auth.SysBaseMenus).Error
+	//return err
+	return
 }
 
 // findChildrenAuthority Query subrole
 // findChildrenAuthority 查询子角色
 func findChildrenAuthority(authority *authorities.Authorities) (err error) {
-	err = global.GVA_DB.Preload("DataAuthorityId").Where("parent_id = ?", authority.AuthorityId).Find(&authority.Children).Error
-	if len(authority.Children) > 0 {
-		for k := range authority.Children {
-			err = findChildrenAuthority(&authority.Children[k])
-		}
-	}
-	return err
+	//err = global.GVA_DB.Preload("DataAuthorityId").Where("parent_id = ?", authority.AuthorityId).Find(&authority.Children).Error
+	//if len(authority.Children) > 0 {
+	//	for k := range authority.Children {
+	//		err = findChildrenAuthority(&authority.Children[k])
+	//	}
+	//}
+	//return err
+	return
 }
