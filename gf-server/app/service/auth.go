@@ -102,9 +102,9 @@ func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 		global.OkDetailed(r, response.LoginResponse{User: userReturn, Token: token, ExpiresAt: expire.Unix() * 1000}, "登录成功!")
 		r.Exit()
 	}
-	redisJwt, err := GetRedisJWT(userReturn.UUID)
+	redisJwt, err := GetRedisJWT(userReturn.Uuid)
 	if err == redis.ErrNil {
-		if err := SetRedisJWT(userReturn.UUID, token); err != nil {
+		if err := SetRedisJWT(userReturn.Uuid, token); err != nil {
 			global.Result(r, code, g.Map{}, "设置登录状态失败")
 			r.Exit()
 		}
@@ -115,7 +115,7 @@ func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 			global.Result(r, code, g.Map{}, "jwt作废失败")
 			r.Exit()
 		}
-		if err := SetRedisJWT(userReturn.UUID, token); err != nil {
+		if err := SetRedisJWT(userReturn.Uuid, token); err != nil {
 			global.Result(r, code, g.Map{}, "设置登录状态失败")
 			r.Exit()
 		}

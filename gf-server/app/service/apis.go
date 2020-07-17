@@ -4,7 +4,6 @@ import (
 	"errors"
 	"gf-server/app/api/request"
 	"gf-server/app/model/apis"
-	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/util/gconv"
 
 	"github.com/gogf/gf/frame/g"
@@ -67,7 +66,6 @@ func GetAllApis() (apisReturn []*apis.Entity, err error) {
 // 未测试,不确定逻辑是否走得通
 func GetApiInfoList(api *request.GetApiList) (list interface{}, total int, err error) {
 	db := g.DB("default")
-	gdb.New()
 	limit := api.PageSize
 	offset := api.PageSize * (api.Page - 1)
 	condition := g.Map{}

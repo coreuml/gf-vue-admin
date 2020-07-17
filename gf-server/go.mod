@@ -1,8 +1,8 @@
 module gf-server
 
 require (
-	github.com/SliverHorn/gdb-adapter v0.0.0-20200716075554-77c83f7aab8c
 	github.com/casbin/casbin v1.9.1
+	github.com/flipped-aurora/gdb-adapter v0.0.0-20200717022747-ffe4f199caf8
 	github.com/gogf/gf v1.13.1
 	github.com/gogf/gf-jwt v1.1.0
 	github.com/gomodule/redigo v2.0.0+incompatible

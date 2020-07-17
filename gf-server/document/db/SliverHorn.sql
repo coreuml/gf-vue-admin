@@ -79,3 +79,53 @@ CREATE TABLE `casbin_rule`
   CHARACTER SET = utf8
   COLLATE = utf8_general_ci
   ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for authorities Model
+-- ----------------------------
+DROP TABLE IF EXISTS `authorities`;
+CREATE TABLE `authorities`
+(
+    `authority_id`   varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL comment '角色ID',
+    `authority_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '角色名',
+    `parent_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '父角色ID',
+    `create_at`     datetime(0)                                             NULL DEFAULT NULL comment '创建时间',
+    `update_at`     datetime(0)                                             NULL DEFAULT NULL comment '更新时间',
+    `delete_at`     datetime(0)                                             NULL DEFAULT NULL comment '删除时间',
+    PRIMARY KEY (`authority_id`) USING BTREE,
+    UNIQUE INDEX `authority_id` (`authority_id`) USING BTREE,
+    INDEX `idx_sys_authorities_deleted_at` (`delete_at`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8
+  COLLATE = utf8_general_ci
+  ROW_FORMAT = Compact;
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_base_menus Model
+-- ----------------------------
+DROP TABLE IF EXISTS `menus`;
+CREATE TABLE `menus`
+(
+    `id`           int(10) UNSIGNED                                        NOT NULL AUTO_INCREMENT  comment '自增ID',
+    `created_at`   timestamp(0)                                            NULL DEFAULT NULL comment '创建时间',
+    `updated_at`   timestamp(0)                                            NULL DEFAULT NULL comment '更新时间',
+    `deleted_at`   timestamp(0)                                            NULL DEFAULT NULL comment '删除时间',
+    `menu_level`   int(10) UNSIGNED                                        NULL DEFAULT NULL comment '菜单等级(预留字段)',
+    `parent_id`    int(10) UNSIGNED                                        NULL DEFAULT NULL comment '父菜单ID',
+    `path`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '路由path',
+    `name`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '路由name',
+    `hidden`       tinyint(1)                                              NULL DEFAULT NULL comment '是否在列表隐藏',
+    `component`    varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '前端文件路径',
+    `title`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '菜单名',
+    `icon`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '菜单图标',
+    `sort`         int(255)                                                NULL DEFAULT NULL comment '排序标记',
+    `keep_alive`   tinyint(1)                                              NULL DEFAULT NULL comment '是否缓存',
+    `default_menu` tinyint(1)                                              NULL DEFAULT NULL comment '是否是基础路由(开发中)',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_menus_deleted_at` (`deleted_at`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 52
+  CHARACTER SET = utf8
+  COLLATE = utf8_general_ci
+  ROW_FORMAT = Compact;
