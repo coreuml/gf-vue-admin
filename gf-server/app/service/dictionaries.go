@@ -41,3 +41,7 @@ func UpdateDictionary(dict request.UpdateDictionary) (err error) {
 func GetDictionary(dict request.GetDictionary) (dictReturn *dictionaries.Entity, err error) {
 	return dictionaries.FindOne("id = ? OR type = ?", dict.ID, dict.Type)
 }
+
+func GetDictionaryInfoList(info request.DictionarySearch) {
+
+}

@@ -12,15 +12,15 @@ import (
 
 // Entity is the golang structure for table dictionary_details.
 type Entity struct {
-    Id              uint        `orm:"id,primary"        json:"id"`                // 自增ID    
-    CreatedAt       *gtime.Time `orm:"created_at"        json:"created_at"`        // 创建时间  
-    UpdatedAt       *gtime.Time `orm:"updated_at"        json:"updated_at"`        // 更新时间  
-    DeletedAt       *gtime.Time `orm:"deleted_at"        json:"deleted_at"`        // 删除时间  
-    Label           string      `orm:"label"             json:"label"`             // 展示值    
-    Value           int         `orm:"value"             json:"value"`             // 字典值    
-    Status          int         `orm:"status"            json:"status"`            // 启用状态  
-    Sort            int         `orm:"sort"              json:"sort"`              // 排序标记  
-    SysDictionaryId int         `orm:"sys_dictionary_id" json:"sys_dictionary_id"` // 关联标记  
+    Id           uint        `orm:"id,primary"    json:"id"`            // 自增ID    
+    CreatedAt    *gtime.Time `orm:"created_at"    json:"created_at"`    // 创建时间  
+    UpdatedAt    *gtime.Time `orm:"updated_at"    json:"updated_at"`    // 更新时间  
+    DeletedAt    *gtime.Time `orm:"deleted_at"    json:"deleted_at"`    // 删除时间  
+    Label        string      `orm:"label"         json:"label"`         // 展示值    
+    Value        int         `orm:"value"         json:"value"`         // 字典值    
+    Status       int         `orm:"status"        json:"status"`        // 启用状态  
+    Sort         int         `orm:"sort"          json:"sort"`          // 排序标记  
+    DictionaryId int         `orm:"dictionary_id" json:"dictionary_id"` // 关联标记  
 }
 
 // OmitEmpty sets OPTION_OMITEMPTY option for the model, which automatically filers
